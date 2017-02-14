@@ -156,6 +156,10 @@ cdef extern from "class.h":
         int has_td
         int has_ll
         int has_tl
+        # Modification 
+        int has_tb
+        int has_eb
+        # Ends here 
         int l_max_tot
         int ** l_max_ct
         int ln_k_size
@@ -177,6 +181,10 @@ cdef extern from "class.h":
         int index_ct_ll
         int index_ct_tl
         int index_ct_dl
+        # Modification 
+        int index_ct_tb
+        int index_ct_eb
+        # Ends here 
         int * l_size
         int index_md_scalars
         double* ln_k
@@ -201,6 +209,12 @@ cdef extern from "class.h":
         ErrorMsg error_message
 
     cdef struct lensing:
+        # Modification 
+        int index_lt_tb
+        int index_lt_eb
+        int has_tb
+        int has_eb
+        # Ends here 
         int has_tt
         int has_ee
         int has_te
@@ -221,6 +235,7 @@ cdef extern from "class.h":
         int index_lt_td
         int index_lt_ll
         int index_lt_tl
+        
         int * l_max_lt
         int lt_size
         int has_lensed_cls

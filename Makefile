@@ -17,7 +17,7 @@ vpath .base build
 ########################################################
 
 # your C compiler:
-CC       = gcc
+CC       = gcc-4.8
 #CC       = icc
 #CC       = pgcc
 
@@ -25,7 +25,7 @@ CC       = gcc
 AR        = ar rv
 
 # (OPT) your python interpreter
-PYTHON = python
+PYTHON = python2.7
 
 # your optimization flag
 OPTFLAG = -O4 -ffast-math #-march=native
@@ -38,7 +38,7 @@ OMPFLAG   = -fopenmp
 #OMPFLAG   = -openmp
 
 # all other compilation flags
-CCFLAG = -g -fPIC
+CCFLAG = -g -fPIC -fno-tree-vectorize   
 LDFLAG = -g -fPIC
 
 # leave blank to compile without HyRec, or put path to HyRec directory
@@ -110,6 +110,8 @@ CLASS = class.o
 
 TEST_LOOPS = test_loops.o
 
+TEST_LOOPS_OMP = test_loops_omp.o
+
 TEST_DEGENERACY = test_degeneracy.o
 
 TEST_TRANSFER = test_transfer.o
@@ -154,6 +156,9 @@ test_sigma: $(TOOLS) $(SOURCE) $(EXTERNAL) $(OUTPUT) $(TEST_SIGMA)
 	$(CC) $(OPTFLAG) $(OMPFLAG) $(LDFLAG) -o test_sigma $(addprefix build/,$(notdir $^)) -lm
 
 test_loops: $(TOOLS) $(SOURCE) $(EXTERNAL) $(OUTPUT) $(TEST_LOOPS)
+	$(CC) $(OPTFLAG) $(OMPFLAG) $(LDFLAG) -o $@ $(addprefix build/,$(notdir $^)) -lm
+
+test_loops_omp: $(TOOLS) $(SOURCE) $(EXTERNAL) $(OUTPUT) $(TEST_LOOPS_OMP)
 	$(CC) $(OPTFLAG) $(OMPFLAG) $(LDFLAG) -o $@ $(addprefix build/,$(notdir $^)) -lm
 
 test_stephane: $(TOOLS) $(SOURCE) $(EXTERNAL) $(OUTPUT) $(TEST_STEPHANE)

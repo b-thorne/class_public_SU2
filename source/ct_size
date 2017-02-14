@@ -1,0 +1,845 @@
+  class_alloc(cl_tot,psp->ct_size*sizeof(double),psp->error_message);
+  class_alloc(cl_md,psp->md_size*sizeof(double*),psp->error_message);
+  class_alloc(cl_md_ic,psp->md_size*sizeof(double*),psp->error_message);
+  for (index_md=0;index_md<psp->md_size; index_md++) {
+    class_alloc(cl_md[index_md],psp->ct_size*sizeof(double),psp->error_message);
+    class_alloc(cl_md_ic[index_md],psp->ct_size*psp->ic_ic_size[index_md]*sizeof(double),psp->error_message);
+               psp->error_message,
+               psp->error_message);
+    *TT_RR += (double)(2*l+1)*cl_md_ic[psp->index_md_scalars][index_symmetric_matrix(0,0,psp->ic_size[psp->index_md_scalars])*psp->ct_size+psp->index_ct_tt];
+    *TT_RI += (double)(2*l+1)*cl_md_ic[psp->index_md_scalars][index_symmetric_matrix(0,1,psp->ic_size[psp->index_md_scalars])*psp->ct_size+psp->index_ct_tt]*2.;
+    *TT_II += (double)(2*l+1)*cl_md_ic[psp->index_md_scalars][index_symmetric_matrix(1,1,psp->ic_size[psp->index_md_scalars])*psp->ct_size+psp->index_ct_tt];
+  for (index_md=0;index_md<psp->md_size; index_md++) {
+                    double * * cl_md_ic /* array with argument cl_md_ic[index_md][index_ic1_ic2*psp->ct_size+index_ct] (must be already allocated for a given mode only if several ic's) */
+  if ((psp->md_size == 1) && (psp->ic_size[0] == 1)) {
+    if ((int)l <= psp->l[psp->l_size[index_md]-1]) {
+      class_call(array_interpolate_spline(psp->l,
+                                          psp->l_size[index_md],
+                                          psp->cl[index_md],
+                                          psp->ddcl[index_md],
+                                          psp->ct_size,
+                                          psp->ct_size,
+                                          psp->error_message),
+                 psp->error_message,
+                 psp->error_message);
+      for (index_ct=0; index_ct<psp->ct_size; index_ct++)
+        if ((int)l > psp->l_max_ct[index_md][index_ct])
+      for (index_ct=0; index_ct<psp->ct_size; index_ct++)
+  if ((psp->md_size == 1) && (psp->ic_size[0] > 1)) {
+    for (index_ct=0; index_ct<psp->ct_size; index_ct++)
+    for (index_ic1 = 0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+      for (index_ic2 = index_ic1; index_ic2 < psp->ic_size[index_md]; index_ic2++) {
+        index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md]);
+        if (((int)l <= psp->l[psp->l_size[index_md]-1]) &&
+            (psp->is_non_zero[index_md][index_ic1_ic2] == _TRUE_)) {
+          class_call(array_interpolate_spline(psp->l,
+                                              psp->l_size[index_md],
+                                              psp->cl[index_md],
+                                              psp->ddcl[index_md],
+                                              psp->ic_ic_size[index_md]*psp->ct_size,
+                                              psp->ic_ic_size[index_md]*psp->ct_size,
+                                              psp->error_message),
+                     psp->error_message,
+                     psp->error_message);
+          for (index_ct=0; index_ct<psp->ct_size; index_ct++)
+            if ((int)l > psp->l_max_ct[index_md][index_ct])
+              cl_md_ic[index_md][index_ic1_ic2*psp->ct_size+index_ct]=0.;
+          for (index_ct=0; index_ct<psp->ct_size; index_ct++)
+            cl_md_ic[index_md][index_ic1_ic2*psp->ct_size+index_ct]=0.;
+        for (index_ct=0; index_ct<psp->ct_size; index_ct++) {
+            cl_tot[index_ct]+=cl_md_ic[index_md][index_ic1_ic2*psp->ct_size+index_ct];
+            cl_tot[index_ct]+=2.*cl_md_ic[index_md][index_ic1_ic2*psp->ct_size+index_ct];
+  if (psp->md_size > 1) {
+    for (index_ct=0; index_ct<psp->ct_size; index_ct++)
+    for (index_md = 0; index_md < psp->md_size; index_md++) {
+      if (psp->ic_size[index_md] == 1) {
+        if ((int)l <= psp->l[psp->l_size[index_md]-1]) {
+          class_call(array_interpolate_spline(psp->l,
+                                              psp->l_size[index_md],
+                                              psp->cl[index_md],
+                                              psp->ddcl[index_md],
+                                              psp->ct_size,
+                                              psp->ct_size,
+                                              psp->error_message),
+                     psp->error_message,
+                     psp->error_message);
+          for (index_ct=0; index_ct<psp->ct_size; index_ct++)
+            if ((int)l > psp->l_max_ct[index_md][index_ct])
+          for (index_ct=0; index_ct<psp->ct_size; index_ct++)
+      if (psp->ic_size[index_md] > 1) {
+        if ((int)l <= psp->l[psp->l_size[index_md]-1]) {
+          class_call(array_interpolate_spline(psp->l,
+                                              psp->l_size[index_md],
+                                              psp->cl[index_md],
+                                              psp->ddcl[index_md],
+                                              psp->ic_ic_size[index_md]*psp->ct_size,
+                                              psp->ic_ic_size[index_md]*psp->ct_size,
+                                              psp->error_message),
+                     psp->error_message,
+                     psp->error_message);
+          for (index_ic1 = 0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+            for (index_ic2 = index_ic1; index_ic2 < psp->ic_size[index_md]; index_ic2++) {
+              index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md]);
+              for (index_ct=0; index_ct<psp->ct_size; index_ct++) {
+                if (((int)l > psp->l_max_ct[index_md][index_ct]) || (psp->is_non_zero[index_md][index_ic1_ic2] == _FALSE_))
+                  cl_md_ic[index_md][index_ic1_ic2*psp->ct_size+index_ct]=0.;
+          for (index_ic1 = 0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+            for (index_ic2 = index_ic1; index_ic2 < psp->ic_size[index_md]; index_ic2++) {
+              index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md]);
+              for (index_ct=0; index_ct<psp->ct_size; index_ct++) {
+                cl_md_ic[index_md][index_ic1_ic2*psp->ct_size+index_ct]=0.;
+        for (index_ct=0; index_ct<psp->ct_size; index_ct++) {
+          for (index_ic1 = 0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+            for (index_ic2 = index_ic1; index_ic2 < psp->ic_size[index_md]; index_ic2++) {
+              index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md]);
+                cl_md[index_md][index_ct]+=cl_md_ic[index_md][index_ic1_ic2*psp->ct_size+index_ct];
+                cl_md[index_md][index_ct]+=2.*cl_md_ic[index_md][index_ic1_ic2*psp->ct_size+index_ct];
+      for (index_ct=0; index_ct<psp->ct_size; index_ct++)
+                    double * output_ic   /* array with argument output_tot[index_k * psp->ic_ic_size[index_md] + index_ic1_ic2] (must be already allocated only if more than one initial condition) */
+  index_md = psp->index_md_scalars;
+             psp->error_message);
+             psp->error_message,
+  if (psp->ln_tau_size == 1) {
+               psp->error_message,
+    for (index_k=0; index_k<psp->ln_k_size; index_k++)
+      if (psp->ic_size[index_md] == 1) {
+      	output_tot[index_k] = psp->ln_pk[index_k];
+        for (index_ic1_ic2 = 0; index_ic1_ic2 < psp->ic_ic_size[index_md]; index_ic1_ic2++) {
+          output_ic[index_k * psp->ic_ic_size[index_md] + index_ic1_ic2] =
+            psp->ln_pk[index_k * psp->ic_ic_size[index_md] + index_ic1_ic2];
+    if (psp->ic_ic_size[index_md] == 1) {
+      class_call(array_interpolate_spline(psp->ln_tau,
+                                          psp->ln_tau_size,
+                                          psp->ln_pk,
+                                          psp->ddln_pk,
+                                          psp->ln_k_size,
+                                          psp->ln_k_size,
+                                          psp->error_message),
+                 psp->error_message,
+                 psp->error_message);
+      class_call(array_interpolate_spline(psp->ln_tau,
+                                          psp->ln_tau_size,
+                                          psp->ln_pk,
+                                          psp->ddln_pk,
+                                          psp->ic_ic_size[index_md]*psp->ln_k_size,
+                                          psp->ic_ic_size[index_md]*psp->ln_k_size,
+                                          psp->error_message),
+                 psp->error_message,
+                 psp->error_message);
+  if (psp->ic_size[index_md] > 1) {
+    for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+      for (index_ic1=0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+        for (index_ic2 = index_ic1; index_ic2 < psp->ic_size[index_md]; index_ic2++) {
+          index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md]);
+            output_tot[index_k] += exp(output_ic[index_k * psp->ic_ic_size[index_md] + index_ic1_ic2]);
+            if (psp->is_non_zero[index_md][index_ic1_ic2] == _TRUE_) {
+                2. * output_ic[index_k * psp->ic_ic_size[index_md] + index_ic1_ic2] *
+                sqrt(exp(output_ic[index_k * psp->ic_ic_size[index_md] + index_symmetric_matrix(index_ic1,index_ic1,psp->ic_size[index_md])]) *
+                     exp(output_ic[index_k * psp->ic_ic_size[index_md] + index_symmetric_matrix(index_ic2,index_ic2,psp->ic_size[index_md])]));
+              output_ic[index_k * psp->ic_ic_size[index_md] + index_ic1_ic2] = 0.;
+                 psp->error_message,
+                 exp(psp->ln_k[index_k]),z,output_tot[index_k]);
+    if (psp->ic_size[index_md] == 1) {
+      for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+      for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+        for (index_ic1=0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+          index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic1,psp->ic_size[index_md]);
+          output_ic[index_k * psp->ic_ic_size[index_md] + index_ic1_ic2] = exp(output_ic[index_k * psp->ic_ic_size[index_md] + index_ic1_ic2]);
+        for (index_ic1=0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+          for (index_ic2 = index_ic1+1; index_ic2 < psp->ic_size[index_md]; index_ic2++) {
+            output_ic[index_k * psp->ic_ic_size[index_md] + index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md])] =
+              output_ic[index_k * psp->ic_ic_size[index_md] + index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md])]
+              *sqrt(output_ic[index_k * psp->ic_ic_size[index_md] + index_symmetric_matrix(index_ic1,index_ic1,psp->ic_size[index_md])] *
+                    output_ic[index_k * psp->ic_ic_size[index_md] + index_symmetric_matrix(index_ic2,index_ic2,psp->ic_size[index_md])]);
+    if (psp->ic_size[index_md] > 1) {
+      for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+  index_md = psp->index_md_scalars;
+  class_test((k < 0.) || (k > exp(psp->ln_k[psp->ln_k_size-1])),
+             psp->error_message,
+             "k=%e out of bounds [%e:%e]",k,0.,exp(psp->ln_k[psp->ln_k_size-1]));
+  if (k < exp(psp->ln_k[0])) {
+      if (psp->ic_size[index_md] == 1) {
+        for (index_ic1_ic2 = 0; index_ic1_ic2 < psp->ic_ic_size[index_md]; index_ic1_ic2++) {
+                  psp->ln_k_size*sizeof(double),
+                  psp->error_message);
+      if (psp->ic_size[index_md] > 1) {
+                    sizeof(double)*psp->ic_ic_size[index_md]*psp->ln_k_size,
+                    psp->error_message);
+                 psp->error_message,
+                 psp->error_message);
+                  sizeof(double)*psp->ic_ic_size[index_md],
+                  psp->error_message);
+                 ppm->error_message,psp->error_message);
+      kmin = exp(psp->ln_k[0]);
+                  sizeof(double)*psp->ic_ic_size[index_md],
+                  psp->error_message);
+                 psp->error_message);
+      if (psp->ic_size[index_md] == 1) {
+      	for (index_ic1_ic2 = 0; index_ic1_ic2 < psp->ic_ic_size[index_md]; index_ic1_ic2++) {
+      if (psp->ic_size[index_md] > 1)
+                psp->ln_k_size*sizeof(double),
+                psp->error_message);
+    if (psp->ic_size[index_md] > 1) {
+                  sizeof(double)*psp->ic_ic_size[index_md]*psp->ln_k_size,
+                  psp->error_message);
+               psp->error_message,
+               psp->error_message);
+                sizeof(double)*psp->ic_ic_size[index_md]*psp->ln_k_size,
+                psp->error_message);
+    if (psp->ic_size[index_md] == 1) {
+      class_call(array_spline_table_lines(psp->ln_k,
+                                          psp->ln_k_size,
+                                          psp->error_message),
+                 psp->error_message,
+                 psp->error_message);
+      class_call(array_interpolate_spline(psp->ln_k,
+                                          psp->ln_k_size,
+                                          psp->error_message),
+                 psp->error_message,
+                 psp->error_message);
+      class_call(array_spline_table_lines(psp->ln_k,
+                                          psp->ln_k_size,
+                                          psp->ic_ic_size[index_md],
+                                          psp->error_message),
+                 psp->error_message,
+                 psp->error_message);
+      class_call(array_interpolate_spline(psp->ln_k,
+                                          psp->ln_k_size,
+                                          psp->ic_ic_size[index_md],
+                                          psp->ic_ic_size[index_md],
+                                          psp->error_message),
+                 psp->error_message,
+                 psp->error_message);
+      for (index_ic1 = 0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+        index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic1,psp->ic_size[index_md]);
+      for (index_ic1 = 0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+        for (index_ic2 = index_ic1+1; index_ic2 < psp->ic_size[index_md]; index_ic2++) {
+          index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md]);
+          if (psp->is_non_zero[index_md][index_ic1_ic2] == _TRUE_) {
+              sqrt(pk_ic[index_symmetric_matrix(index_ic1,index_ic1,psp->ic_size[index_md])]*
+                   pk_ic[index_symmetric_matrix(index_ic2,index_ic2,psp->ic_size[index_md])]);
+  if (psp->ic_size[index_md] > 1) {
+    for (index_ic1 = 0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+      for (index_ic2 = index_ic1; index_ic2 < psp->ic_size[index_md]; index_ic2++) {
+        index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md]);
+        if (psp->is_non_zero[index_md][index_ic1_ic2] == _TRUE_) {
+               psp->error_message,
+             psp->error_message);
+             psp->error_message,
+  if (psp->ln_tau_size == 1) {
+               psp->error_message,
+    for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+      output_tot[index_k] = psp->ln_pk_nl[index_k];
+    class_call(array_interpolate_spline(psp->ln_tau,
+                                        psp->ln_tau_size,
+                                        psp->ln_pk_nl,
+                                        psp->ddln_pk_nl,
+                                        psp->ln_k_size,
+                                        psp->ln_k_size,
+                                        psp->error_message),
+               psp->error_message,
+               psp->error_message);
+    for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+  index_md = psp->index_md_scalars;
+  class_test((k < exp(psp->ln_k[0])) || (k > exp(psp->ln_k[psp->ln_k_size-1])),
+             psp->error_message,
+             "k=%e out of bounds [%e:%e]",k,0.,exp(psp->ln_k[psp->ln_k_size-1]));
+              psp->ln_k_size*sizeof(double),
+              psp->error_message);
+             psp->error_message,
+             psp->error_message);
+              sizeof(double)*psp->ic_ic_size[index_md]*psp->ln_k_size,
+              psp->error_message);
+  class_call(array_spline_table_lines(psp->ln_k,
+                                      psp->ln_k_size,
+                                      psp->error_message),
+             psp->error_message,
+             psp->error_message);
+  class_call(array_interpolate_spline(psp->ln_k,
+                                      psp->ln_k_size,
+                                      psp->error_message),
+             psp->error_message,
+             psp->error_message);
+                    double * output /* array with argument output[(index_k*psp->ic_size[index_md]+index_ic)*psp->tr_size+index_tr] (must be already allocated) */
+  index_md = psp->index_md_scalars;
+             psp->error_message);
+             psp->error_message,
+  if (psp->ln_tau_size == 1) {
+               psp->error_message,
+    for (index_k=0; index_k<psp->ln_k_size; index_k++)
+      for (index_tr=0; index_tr<psp->tr_size; index_tr++)
+        for (index_ic = 0; index_ic < psp->ic_size[index_md]; index_ic++)
+          output[(index_k*psp->ic_size[index_md]+index_ic)*psp->tr_size+index_tr]
+            = psp->matter_transfer[(index_k*psp->ic_size[index_md]+index_ic)*psp->tr_size+index_tr];
+    class_call(array_interpolate_spline(psp->ln_tau,
+                                        psp->ln_tau_size,
+                                        psp->matter_transfer,
+                                        psp->ddmatter_transfer,
+                                        psp->ic_size[index_md]*psp->tr_size*psp->ln_k_size,
+                                        psp->ic_size[index_md]*psp->tr_size*psp->ln_k_size,
+                                        psp->error_message),
+               psp->error_message,
+               psp->error_message);
+                          double * output  /* array with argument output[index_ic*psp->tr_size+index_tr] (must be already allocated) */
+  index_md = psp->index_md_scalars;
+  class_test((k < 0.) || (k > exp(psp->ln_k[psp->ln_k_size-1])),
+             psp->error_message,
+             "k=%e out of bounds [%e:%e]",k,0.,exp(psp->ln_k[psp->ln_k_size-1]));
+              psp->ln_k_size*psp->tr_size*psp->ic_size[index_md]*sizeof(double),
+              psp->error_message);
+             psp->error_message,
+             psp->error_message);
+              psp->ln_k_size*psp->tr_size*psp->ic_size[index_md]*sizeof(double),
+              psp->error_message);
+  class_call(array_spline_table_lines(psp->ln_k,
+                                      psp->ln_k_size,
+                                      psp->tr_size*psp->ic_size[index_md],
+                                      psp->error_message),
+             psp->error_message,
+             psp->error_message);
+  class_call(array_interpolate_spline(psp->ln_k,
+                                      psp->ln_k_size,
+                                      psp->tr_size*psp->ic_size[index_md],
+                                      psp->tr_size*psp->ic_size[index_md],
+                                      psp->error_message),
+             psp->error_message,
+             psp->error_message);
+    psp->md_size = 0;
+    if (psp->spectra_verbose > 0)
+    if (psp->spectra_verbose > 0)
+             psp->error_message,
+             psp->error_message);
+               psp->error_message,
+               psp->error_message);
+    psp->ct_size=0;
+               psp->error_message,
+               psp->error_message);
+                 psp->error_message,
+                 psp->error_message);
+      psp->ln_pk=NULL;
+                 psp->error_message,
+                 psp->error_message);
+      psp->matter_transfer=NULL;
+    psp->ln_k_size=0;
+               psp->error_message,
+               psp->error_message);
+               psp->error_message,
+    psp->alpha_II_2_20=TT_II/(TT_II+TT_RI+TT_RR);
+    psp->alpha_RI_2_20=TT_RI/(TT_II+TT_RI+TT_RR);
+    psp->alpha_RR_2_20=TT_RR/(TT_II+TT_RI+TT_RR);
+               psp->error_message,
+               psp->error_message);
+               psp->error_message,
+    psp->alpha_II_21_200=TT_II/(TT_II+TT_RI+TT_RR);
+    psp->alpha_RI_21_200=TT_RI/(TT_II+TT_RI+TT_RR);
+    psp->alpha_RR_21_200=TT_RR/(TT_II+TT_RI+TT_RR);
+               psp->error_message,
+               psp->error_message);
+               psp->error_message,
+    psp->alpha_II_201_2500=TT_II/(TT_II+TT_RI+TT_RR);
+    psp->alpha_RI_201_2500=TT_RI/(TT_II+TT_RI+TT_RR);
+    psp->alpha_RR_201_2500=TT_RR/(TT_II+TT_RI+TT_RR);
+               psp->error_message,
+               psp->error_message);
+               psp->error_message,
+    psp->alpha_II_2_2500=TT_II/(TT_II+TT_RI+TT_RR);
+    psp->alpha_RI_2_2500=TT_RI/(TT_II+TT_RI+TT_RR);
+    psp->alpha_RR_2_2500=TT_RR/(TT_II+TT_RI+TT_RR);
+      psp->alpha_kp=ppm->f_cdi*ppm->f_cdi
+      psp->alpha_k1=ppm->f_cdi*ppm->f_cdi*exp((ppm->n_cdi-ppm->n_s)*log(0.002/ppm->k_pivot))
+      psp->alpha_k2=ppm->f_cdi*ppm->f_cdi*exp((ppm->n_cdi-ppm->n_s)*log(0.1/ppm->k_pivot))
+      psp->alpha_kp=ppm->f_nid*ppm->f_nid
+      psp->alpha_k1=ppm->f_nid*ppm->f_nid*exp((ppm->n_nid-ppm->n_s)*log(0.002/ppm->k_pivot))
+      psp->alpha_k2=ppm->f_nid*ppm->f_nid*exp((ppm->n_nid-ppm->n_s)*log(0.1/ppm->k_pivot))
+      psp->alpha_kp=ppm->f_niv*ppm->f_niv
+      psp->alpha_k1=ppm->f_niv*ppm->f_niv*exp((ppm->n_niv-ppm->n_s)*log(0.002/ppm->k_pivot))
+      psp->alpha_k2=ppm->f_niv*ppm->f_niv*exp((ppm->n_niv-ppm->n_s)*log(0.1/ppm->k_pivot))
+  if (psp->md_size > 0) {
+    if (psp->ct_size > 0) {
+      for (index_md = 0; index_md < psp->md_size; index_md++) {
+        free(psp->l_max_ct[index_md]);
+        free(psp->cl[index_md]);
+        free(psp->ddcl[index_md]);
+      free(psp->l);
+      free(psp->l_size);
+      free(psp->l_max_ct);
+      free(psp->l_max);
+      free(psp->cl);
+      free(psp->ddcl);
+    if (psp->ln_k_size > 0) {
+      free(psp->ln_tau);
+      free(psp->ln_k);
+      if (psp->ln_pk != NULL) {
+        free(psp->ln_pk);
+        if (psp->ln_tau_size > 1) {
+          free(psp->ddln_pk);
+        if (psp->ln_pk_nl != NULL) {
+          free(psp->ln_pk_nl);
+          if (psp->ln_tau_size > 1) {
+            free(psp->ddln_pk_nl);
+      if (psp->matter_transfer != NULL) {
+        free(psp->matter_transfer);
+        if (psp->ln_tau_size > 1) {
+          free(psp->ddmatter_transfer);
+  for (index_md=0; index_md < psp->md_size; index_md++)
+    free(psp->is_non_zero[index_md]);
+  free(psp->is_non_zero);
+  free(psp->ic_size);
+  free(psp->ic_ic_size);
+  psp->md_size = ppt->md_size;
+    psp->index_md_scalars = ppt->index_md_scalars;
+  class_alloc(psp->ic_size,
+              sizeof(int)*psp->md_size,
+              psp->error_message);
+  class_alloc(psp->ic_ic_size,
+              sizeof(int)*psp->md_size,
+              psp->error_message);
+  class_alloc(psp->is_non_zero,
+              sizeof(short *)*psp->md_size,
+              psp->error_message);
+  for (index_md=0; index_md < psp->md_size; index_md++) {
+    psp->ic_size[index_md] = ppm->ic_size[index_md];
+    psp->ic_ic_size[index_md] = ppm->ic_ic_size[index_md];
+    class_alloc(psp->is_non_zero[index_md],
+                sizeof(short)*psp->ic_ic_size[index_md],
+                psp->error_message);
+    for (index_ic1_ic2=0; index_ic1_ic2 < psp->ic_ic_size[index_md]; index_ic1_ic2++)
+      psp->is_non_zero[index_md][index_ic1_ic2] = ppm->is_non_zero[index_md][index_ic1_ic2];
+      psp->has_tt = _TRUE_;
+      psp->index_ct_tt=index_ct;
+      psp->has_tt = _FALSE_;
+      psp->has_ee = _TRUE_;
+      psp->index_ct_ee=index_ct;
+      psp->has_ee = _FALSE_;
+      psp->has_tb = _TRUE_;
+      psp->index_ct_tb=index_ct;
+      psp->has_tb = _FALSE_;
+      psp->has_eb = _TRUE_;
+      psp->index_ct_eb=index_ct;
+      psp->has_eb = _FALSE_;
+      psp->has_te = _TRUE_;
+      psp->index_ct_te=index_ct;
+      psp->has_te = _FALSE_;
+      psp->has_bb = _TRUE_;
+      psp->index_ct_bb=index_ct;
+      psp->has_bb = _FALSE_;
+      psp->has_pp = _TRUE_;
+      psp->index_ct_pp=index_ct;
+      psp->has_pp = _FALSE_;
+      psp->has_tp = _TRUE_;
+      psp->index_ct_tp=index_ct;
+      psp->has_tp = _FALSE_;
+    psp->ct_size = index_ct;
+      psp->has_ep = _TRUE_;
+      psp->index_ct_ep=index_ct;
+      psp->has_ep = _FALSE_;
+      psp->d_size=ppt->selection_num;
+      psp->d_size=0;
+      psp->has_dd = _TRUE_;
+      psp->index_ct_dd=index_ct;
+      index_ct+=(psp->d_size*(psp->d_size+1)-(psp->d_size-psp->non_diag)*(psp->d_size-1-psp->non_diag))/2;
+      psp->has_dd = _FALSE_;
+       psp->has_td = _TRUE_;
+       psp->index_ct_td=index_ct;
+       index_ct+=psp->d_size;
+       psp->has_td = _FALSE_;
+    psp->has_td = _FALSE_;
+      psp->has_pd = _TRUE_;
+      psp->index_ct_pd=index_ct;
+      index_ct+=psp->d_size;
+      psp->has_pd = _FALSE_;
+    psp->has_td = _FALSE_;
+      psp->has_ll = _TRUE_;
+      psp->index_ct_ll=index_ct;
+      index_ct+=(psp->d_size*(psp->d_size+1)-(psp->d_size-psp->non_diag)*(psp->d_size-1-psp->non_diag))/2;
+      psp->has_ll = _FALSE_;
+       psp->has_tl = _TRUE_;
+       psp->index_ct_tl=index_ct;
+       index_ct+=psp->d_size;
+       psp->has_tl = _FALSE_;
+    psp->has_tl = _FALSE_;
+      psp->has_dl = _TRUE_;
+      psp->index_ct_dl=index_ct;
+      index_ct += psp->d_size*psp->d_size - (psp->d_size-psp->non_diag)*(psp->d_size-1-psp->non_diag);
+      psp->has_dl = _FALSE_;
+    psp->ct_size = index_ct;
+    class_alloc(psp->l_max,sizeof(int*)*psp->md_size,psp->error_message);
+    class_alloc(psp->l_max_ct,sizeof(int*)*psp->md_size,psp->error_message);
+    for (index_md=0; index_md<psp->md_size; index_md++) {
+      class_calloc(psp->l_max_ct[index_md],psp->ct_size,sizeof(int),psp->error_message);
+      if (psp->has_tt == _TRUE_) psp->l_max_ct[ppt->index_md_scalars][psp->index_ct_tt] = ppt->l_scalar_max;
+      if (psp->has_ee == _TRUE_) psp->l_max_ct[ppt->index_md_scalars][psp->index_ct_ee] = ppt->l_scalar_max;
+      if (psp->has_te == _TRUE_) psp->l_max_ct[ppt->index_md_scalars][psp->index_ct_te] = ppt->l_scalar_max;
+      if (psp->has_pp == _TRUE_) psp->l_max_ct[ppt->index_md_scalars][psp->index_ct_pp] = ppt->l_scalar_max;
+      if (psp->has_tp == _TRUE_) psp->l_max_ct[ppt->index_md_scalars][psp->index_ct_tp] = ppt->l_scalar_max;
+      if (psp->has_ep == _TRUE_) psp->l_max_ct[ppt->index_md_scalars][psp->index_ct_ep] = ppt->l_scalar_max;
+      if (psp->has_tb == _TRUE_) psp->l_max_ct[ppt->index_md_scalars][psp->index_ct_tb] = ppt->l_scalar_max;
+      if (psp->has_eb == _TRUE_) psp->l_max_ct[ppt->index_md_scalars][psp->index_ct_eb] = ppt->l_scalar_max;
+      if (psp->has_dd == _TRUE_)
+        for (index_ct=psp->index_ct_dd;
+             index_ct<psp->index_ct_dd+(psp->d_size*(psp->d_size+1)-(psp->d_size-psp->non_diag)*(psp->d_size-1-psp->non_diag))/2;
+          psp->l_max_ct[ppt->index_md_scalars][index_ct] = ppt->l_lss_max;
+      if (psp->has_td == _TRUE_)
+        for (index_ct=psp->index_ct_td;
+             index_ct<psp->index_ct_td+psp->d_size;
+          psp->l_max_ct[ppt->index_md_scalars][index_ct] = MIN(ppt->l_scalar_max,ppt->l_lss_max);
+      if (psp->has_pd == _TRUE_)
+        for (index_ct=psp->index_ct_pd;
+             index_ct<psp->index_ct_pd+psp->d_size;
+          psp->l_max_ct[ppt->index_md_scalars][index_ct] = MIN(ppt->l_scalar_max,ppt->l_lss_max);
+      if (psp->has_ll == _TRUE_)
+        for (index_ct=psp->index_ct_ll;
+             index_ct<psp->index_ct_ll+(psp->d_size*(psp->d_size+1)-(psp->d_size-psp->non_diag)*(psp->d_size-1-psp->non_diag))/2;
+          psp->l_max_ct[ppt->index_md_scalars][index_ct] = ppt->l_lss_max;
+      if (psp->has_tl == _TRUE_)
+        for (index_ct=psp->index_ct_tl;
+             index_ct<psp->index_ct_tl+psp->d_size;
+          psp->l_max_ct[ppt->index_md_scalars][index_ct] = MIN(ppt->l_scalar_max,ppt->l_lss_max);
+      if (psp->has_dl == _TRUE_)
+        for (index_ct=psp->index_ct_dl;
+             index_ct < psp->index_ct_dl+(psp->d_size*psp->d_size - (psp->d_size-psp->non_diag)*(psp->d_size-1-psp->non_diag));
+          psp->l_max_ct[ppt->index_md_scalars][index_ct] = ppt->l_lss_max;
+      if (psp->has_tt == _TRUE_) psp->l_max_ct[ppt->index_md_tensors][psp->index_ct_tt] = ppt->l_tensor_max;
+      if (psp->has_ee == _TRUE_) psp->l_max_ct[ppt->index_md_tensors][psp->index_ct_ee] = ppt->l_tensor_max;
+      if (psp->has_te == _TRUE_) psp->l_max_ct[ppt->index_md_tensors][psp->index_ct_te] = ppt->l_tensor_max;
+      if (psp->has_bb == _TRUE_) psp->l_max_ct[ppt->index_md_tensors][psp->index_ct_bb] = ppt->l_tensor_max;
+      if (psp->has_tb == _TRUE_) psp->l_max_ct[ppt->index_md_tensors][psp->index_ct_tb] = ppt->l_tensor_max;
+      if (psp->has_eb == _TRUE_) psp->l_max_ct[ppt->index_md_tensors][psp->index_ct_eb] = ppt->l_tensor_max; 
+    psp->l_max_tot = 0.;
+    for (index_md=0; index_md < psp->md_size; index_md++) {
+      psp->l_max[index_md] = 0.;
+      for (index_ct=0.; index_ct<psp->ct_size; index_ct++)
+        psp->l_max[index_md] = MAX(psp->l_max[index_md],psp->l_max_ct[index_md][index_ct]);
+            psp->l_max_tot = MAX(psp->l_max_tot,psp->l_max[index_md]);
+  class_define_index(psp->index_tr_delta_g,ppt->has_source_delta_g,index_tr,1);
+  class_define_index(psp->index_tr_delta_b,ppt->has_source_delta_b,index_tr,1);
+  class_define_index(psp->index_tr_delta_cdm,ppt->has_source_delta_cdm,index_tr,1);
+  class_define_index(psp->index_tr_delta_dcdm,ppt->has_source_delta_dcdm,index_tr,1);
+  class_define_index(psp->index_tr_delta_scf,ppt->has_source_delta_scf,index_tr,1);
+  class_define_index(psp->index_tr_delta_fld,ppt->has_source_delta_fld,index_tr,1);
+  class_define_index(psp->index_tr_delta_ur,ppt->has_source_delta_ur,index_tr,1);
+  class_define_index(psp->index_tr_delta_dr,ppt->has_source_delta_dr,index_tr,1);
+  class_define_index(psp->index_tr_delta_ncdm1,ppt->has_source_delta_ncdm,index_tr,pba->N_ncdm);
+  class_define_index(psp->index_tr_delta_tot,ppt->has_density_transfers,index_tr,1);
+  class_define_index(psp->index_tr_phi,ppt->has_source_phi,index_tr,1);
+  class_define_index(psp->index_tr_psi,ppt->has_source_psi,index_tr,1);
+  class_define_index(psp->index_tr_theta_g,ppt->has_source_theta_g,index_tr,1);
+  class_define_index(psp->index_tr_theta_b,ppt->has_source_theta_b,index_tr,1);
+  class_define_index(psp->index_tr_theta_cdm,ppt->has_source_theta_cdm,index_tr,1);
+  class_define_index(psp->index_tr_theta_dcdm,ppt->has_source_theta_dcdm,index_tr,1);
+  class_define_index(psp->index_tr_theta_scf,ppt->has_source_theta_scf,index_tr,1);
+  class_define_index(psp->index_tr_theta_fld,ppt->has_source_theta_fld,index_tr,1);
+  class_define_index(psp->index_tr_theta_ur,ppt->has_source_theta_ur,index_tr,1);
+  class_define_index(psp->index_tr_theta_dr,ppt->has_source_theta_dr,index_tr,1);
+  class_define_index(psp->index_tr_theta_ncdm1,ppt->has_source_theta_ncdm,index_tr,pba->N_ncdm);
+  class_define_index(psp->index_tr_theta_tot,ppt->has_velocity_transfers,index_tr,1);
+  psp->tr_size = index_tr;
+  double * cl_integrand; /* array with argument cl_integrand[index_k*cl_integrand_num_columns+1+psp->index_ct] */
+  class_alloc(psp->l_size,sizeof(int)*psp->md_size,psp->error_message);
+  class_alloc(psp->cl,sizeof(double *)*psp->md_size,psp->error_message);
+  class_alloc(psp->ddcl,sizeof(double *)*psp->md_size,psp->error_message);
+  psp->l_size_max = ptr->l_size_max;
+  class_alloc(psp->l,sizeof(double)*psp->l_size_max,psp->error_message);
+  for (index_l=0; index_l < psp->l_size_max; index_l++) {
+    psp->l[index_l] = (double)ptr->l[index_l];
+  for (index_md = 0; index_md < psp->md_size; index_md++) {
+    psp->l_size[index_md] = ptr->l_size[index_md];
+    class_alloc(psp->cl[index_md],sizeof(double)*psp->l_size[index_md]*psp->ct_size*psp->ic_ic_size[index_md],psp->error_message);
+    class_alloc(psp->ddcl[index_md],sizeof(double)*psp->l_size[index_md]*psp->ct_size*psp->ic_ic_size[index_md],psp->error_message);
+    cl_integrand_num_columns = 1+psp->ct_size*2; /* one for k, ct_size for each type, ct_size for each second derivative of each type */
+    for (index_ic1 = 0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+      for (index_ic2 = index_ic1; index_ic2 < psp->ic_size[index_md]; index_ic2++) {
+        index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md]);
+        if (psp->is_non_zero[index_md][index_ic1_ic2] == _TRUE_) {
+                                 psp->error_message);
+                                 psp->ic_ic_size[index_md]*sizeof(double),
+                                 psp->error_message);
+                                 psp->error_message);
+                                 psp->error_message);
+                                  psp->error_message,
+                                  psp->error_message);
+            if (psp->spectra_verbose > 1)
+            for (index_ct=0; index_ct<psp->ct_size; index_ct++) {
+              psp->cl[index_md]
+                [(index_l * psp->ic_ic_size[index_md] + index_ic1_ic2) * psp->ct_size + index_ct]
+    class_call(array_spline_table_lines(psp->l,
+                                        psp->l_size[index_md],
+                                        psp->cl[index_md],
+                                        psp->ic_ic_size[index_md]*psp->ct_size,
+                                        psp->ddcl[index_md],
+                                        psp->error_message),
+               psp->error_message,
+               psp->error_message);
+  index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md]);
+    class_alloc(transfer_ic1_nc,psp->d_size*sizeof(double),psp->error_message);
+    class_alloc(transfer_ic2_nc,psp->d_size*sizeof(double),psp->error_message);
+               psp->error_message);
+      for (index_d1=0; index_d1<psp->d_size; index_d1++) {
+            psp->l[index_l]*(psp->l[index_l]+1.)*transfer_ic1[ptr->index_tt_nc_lens+index_d1];
+            psp->l[index_l]*(psp->l[index_l]+1.)*transfer_ic2[ptr->index_tt_nc_lens+index_d1];
+    if (psp->has_tt == _TRUE_)
+      cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_tt]=
+    if (psp->has_ee == _TRUE_)
+      cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_ee]=
+    if (psp->has_te == _TRUE_)
+      cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_te]=
+    if (_tensors_ && (psp->has_bb == _TRUE_))
+      cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_bb]=
+    if (_tensors_ && (psp->has_tb == _TRUE_))
+      cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_tb]=
+    if (_tensors_ && (psp->has_eb == _TRUE_))
+      cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_eb]=
+    if (_scalars_ && (psp->has_pp == _TRUE_))
+      cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_pp]=
+    if (_scalars_ && (psp->has_tp == _TRUE_))
+      cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_tp]=
+    if (_scalars_ && (psp->has_ep == _TRUE_))
+      cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_ep]=
+    if (_scalars_ && (psp->has_dd == _TRUE_)) {
+      for (index_d1=0; index_d1<psp->d_size; index_d1++) {
+        for (index_d2=index_d1; index_d2<=MIN(index_d1+psp->non_diag,psp->d_size-1); index_d2++) {
+          cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_dd+index_ct]=
+    if (_scalars_ && (psp->has_td == _TRUE_)) {
+      for (index_d1=0; index_d1<psp->d_size; index_d1++) {
+        cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_td+index_d1]=
+    if (_scalars_ && (psp->has_pd == _TRUE_)) {
+      for (index_d1=0; index_d1<psp->d_size; index_d1++) {
+        cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_pd+index_d1]=
+    if (_scalars_ && (psp->has_ll == _TRUE_)) {
+      for (index_d1=0; index_d1<psp->d_size; index_d1++) {
+        for (index_d2=index_d1; index_d2<=MIN(index_d1+psp->non_diag,psp->d_size-1); index_d2++) {
+          cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_ll+index_ct]=
+    if (_scalars_ && (psp->has_tl == _TRUE_)) {
+      for (index_d1=0; index_d1<psp->d_size; index_d1++) {
+        cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_tl+index_d1]=
+    if (_scalars_ && (psp->has_dl == _TRUE_)) {
+      for (index_d1=0; index_d1<psp->d_size; index_d1++) {
+        for (index_d2=MAX(index_d1-psp->non_diag,0); index_d2<=MIN(index_d1+psp->non_diag,psp->d_size-1); index_d2++) {
+          cl_integrand[index_q*cl_integrand_num_columns+1+psp->index_ct_dl+index_ct]=
+  for (index_ct=0; index_ct<psp->ct_size; index_ct++) {
+    if ((_scalars_ && (psp->has_bb == _TRUE_) && (index_ct == psp->index_ct_bb)) ||
+        (_tensors_ && (psp->has_pp == _TRUE_) && (index_ct == psp->index_ct_pp)) ||
+        (_tensors_ && (psp->has_tp == _TRUE_) && (index_ct == psp->index_ct_tp)) ||
+        (_scalars_ && (psp->has_tb == _TRUE_) && (index_ct == psp->index_ct_tb)) ||
+        (_scalars_ && (psp->has_eb == _TRUE_) && (index_ct == psp->index_ct_eb)) ||
+        (_tensors_ && (psp->has_ep == _TRUE_) && (index_ct == psp->index_ct_ep)) ||
+        (_tensors_ && (psp->has_dd == _TRUE_) && (index_ct == psp->index_ct_dd)) ||
+        (_tensors_ && (psp->has_td == _TRUE_) && (index_ct == psp->index_ct_td)) ||
+        (_tensors_ && (psp->has_pd == _TRUE_) && (index_ct == psp->index_ct_pd)) ||
+        (_tensors_ && (psp->has_ll == _TRUE_) && (index_ct == psp->index_ct_ll)) ||
+        (_tensors_ && (psp->has_tl == _TRUE_) && (index_ct == psp->index_ct_tl)) ||
+        (_tensors_ && (psp->has_dl == _TRUE_) && (index_ct == psp->index_ct_dl))
+      psp->cl[index_md]
+        [(index_l * psp->ic_ic_size[index_md] + index_ic1_ic2) * psp->ct_size + index_ct] = 0.;
+                              1+psp->ct_size+index_ct,
+                              psp->error_message),
+                 psp->error_message,
+                 psp->error_message);
+                                                      1+psp->ct_size+index_ct,
+                                                      psp->error_message),
+                 psp->error_message,
+                 psp->error_message);
+      psp->cl[index_md]
+        [(index_l * psp->ic_ic_size[index_md] + index_ic1_ic2) * psp->ct_size + index_ct]
+             psp->error_message,
+  class_test((psp->z_max_pk < 0),
+             psp->error_message,
+             "asked for negative redshift z=%e",psp->z_max_pk);
+  if (psp->z_max_pk == 0.) {
+    psp->ln_tau_size=1;
+    class_call(background_tau_of_z(pba,psp->z_max_pk,&tau_min),
+               psp->error_message);
+               psp->error_message,
+               "you asked for zmax=%e, i.e. taumin=%e, smaller than or equal to the first possible value =%e; it should be strictly bigger for a successfull interpolation",psp->z_max_pk,tau_min,ppt->tau_sampling[0]);
+               psp->error_message,
+    psp->ln_tau_size=ppt->tau_size-index_tau;
+  class_alloc(psp->ln_tau,sizeof(double)*psp->ln_tau_size,psp->error_message);
+  for (index_tau=0; index_tau<psp->ln_tau_size; index_tau++) {
+    psp->ln_tau[index_tau]=log(ppt->tau_sampling[index_tau-psp->ln_tau_size+ppt->tau_size]);
+  psp->ln_k_size = ppt->k_size[ppt->index_md_scalars];
+  class_alloc(psp->ln_k,sizeof(double)*psp->ln_k_size,psp->error_message);
+  for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+               psp->error_message,
+    psp->ln_k[index_k]=log(ppt->k[ppt->index_md_scalars][index_k]);
+             psp->error_message,
+  index_md = psp->index_md_scalars;
+  class_alloc(primordial_pk,psp->ic_ic_size[index_md]*sizeof(double),psp->error_message);
+  class_alloc(psp->ln_pk,
+              sizeof(double)*psp->ln_tau_size*psp->ln_k_size*psp->ic_ic_size[index_md],
+              psp->error_message);
+    class_alloc(psp->ln_pk_nl,
+                sizeof(double)*psp->ln_tau_size*psp->ln_k_size,
+                psp->error_message);
+    psp->ln_pk_nl = NULL;
+  for (index_tau=0 ; index_tau < psp->ln_tau_size; index_tau++) {
+    for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+      class_call(primordial_spectrum_at_k(ppm,index_md,logarithmic,psp->ln_k[index_k],primordial_pk),
+                 psp->error_message);
+      for (index_ic1 = 0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+        index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic1,psp->ic_size[index_md]);
+          [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+        psp->ln_pk[(index_tau * psp->ln_k_size + index_k)* psp->ic_ic_size[index_md] + index_ic1_ic2] =
+          log(2.*_PI_*_PI_/exp(3.*psp->ln_k[index_k])
+        ln_pk_tot += psp->ln_pk[(index_tau * psp->ln_k_size + index_k)* psp->ic_ic_size[index_md] + index_ic1_ic2];
+      for (index_ic1 = 0; index_ic1 < psp->ic_size[index_md]; index_ic1++) {
+        for (index_ic2 = index_ic1+1; index_ic2 < psp->ic_size[index_md]; index_ic2++) {
+          index_ic1_ic2 = index_symmetric_matrix(index_ic1,index_ic2,psp->ic_size[index_md]);
+          if (psp->is_non_zero[index_md][index_ic1_ic2] == _TRUE_) {
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->ln_pk[(index_tau * psp->ln_k_size + index_k)* psp->ic_ic_size[index_md] + index_ic1_ic2] =
+            ln_pk_tot += psp->ln_pk[(index_tau * psp->ln_k_size + index_k)* psp->ic_ic_size[index_md] + index_ic1_ic2];
+            psp->ln_pk[(index_tau * psp->ln_k_size + index_k)* psp->ic_ic_size[index_md] + index_ic1_ic2] = 0.;
+        psp->ln_pk_nl[index_tau * psp->ln_k_size + index_k] =
+          + 2.*log(pnl->nl_corr_density[(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k]);
+  if (psp->ln_tau_size > 1) {
+    class_alloc(psp->ddln_pk,sizeof(double)*psp->ln_tau_size*psp->ln_k_size*psp->ic_ic_size[index_md],psp->error_message);
+    class_call(array_spline_table_lines(psp->ln_tau,
+                                        psp->ln_tau_size,
+                                        psp->ln_pk,
+                                        psp->ic_ic_size[index_md]*psp->ln_k_size,
+                                        psp->ddln_pk,
+                                        psp->error_message),
+               psp->error_message,
+               psp->error_message);
+  class_call(spectra_sigma(pba,ppm,psp,8./pba->h,0.,&(psp->sigma8)),
+             psp->error_message,
+             psp->error_message);
+  if (psp->spectra_verbose>0)
+            psp->sigma8,
+            exp(psp->ln_k[psp->ln_k_size-1])/pba->h);
+    if (psp->ln_tau_size > 1) {
+      class_alloc(psp->ddln_pk_nl,sizeof(double)*psp->ln_tau_size*psp->ln_k_size*psp->ic_ic_size[index_md],psp->error_message);
+      class_call(array_spline_table_lines(psp->ln_tau,
+                                          psp->ln_tau_size,
+                                          psp->ln_pk_nl,
+                                          psp->ln_k_size,
+                                          psp->ddln_pk_nl,
+                                          psp->error_message),
+                 psp->error_message,
+                 psp->error_message);
+  if (psp->ic_ic_size[psp->index_md_scalars]>1)
+                psp->ic_ic_size[psp->index_md_scalars]*sizeof(double),
+                psp->error_message);
+              psp->ln_k_size*index_num*sizeof(double),
+              psp->error_message);
+  for (i=0;i<psp->ln_k_size;i++) {
+    k=exp(psp->ln_k[i]);
+    if (i == (psp->ln_k_size-1)) k *= 0.9999999; // to prevent rounding error leading to k being bigger than maximum value
+               psp->error_message,
+               psp->error_message);
+                          psp->ln_k_size,
+                          psp->error_message),
+             psp->error_message,
+             psp->error_message);
+                                        psp->ln_k_size,
+                                        psp->error_message),
+             psp->error_message,
+             psp->error_message);
+  if (psp->ic_ic_size[psp->index_md_scalars]>1)
+             psp->error_message,
+  index_md = psp->index_md_scalars;
+  class_alloc(psp->matter_transfer,sizeof(double)*psp->ln_tau_size*psp->ln_k_size*psp->ic_size[index_md]*psp->tr_size,psp->error_message);
+  class_alloc(pvecback_sp_long,pba->bg_size*sizeof(double),psp->error_message);
+  for (index_tau=0 ; index_tau < psp->ln_tau_size; index_tau++) {
+                                 ppt->tau_sampling[index_tau-psp->ln_tau_size+ppt->tau_size],
+                                    exp(psp->ln_tau[index_tau]) but we would then loose
+               psp->error_message);
+    for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+      for (index_ic = 0; index_ic < psp->ic_size[index_md]; index_ic++) {
+            [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+          psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_delta_g] = delta_i;
+            [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+          psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_theta_g] = theta_i;
+            [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+          psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_delta_b] = delta_i;
+            [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+          psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_theta_b] = theta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_delta_cdm] = delta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_theta_cdm] = theta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_delta_dcdm] = delta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_theta_dcdm] = theta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_delta_scf] = delta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_theta_scf] = theta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_delta_fld] = delta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_theta_fld] = theta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_delta_ur] = delta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_theta_ur] = theta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_delta_dr] = delta_i;
+              [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+            psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_theta_dr] = theta_i;
+                [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+              psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_delta_ncdm1+n_ncdm] = delta_i;
+                [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+              psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_theta_ncdm1+n_ncdm] = theta_i;
+          psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_phi] = ppt->sources[index_md]
+            [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+          psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_psi] = ppt->sources[index_md]
+            [(index_tau-psp->ln_tau_size+ppt->tau_size) * ppt->k_size[index_md] + index_k];
+          psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_delta_tot] = delta_rho_tot/rho_tot;
+          psp->matter_transfer[((index_tau*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + psp->index_tr_theta_tot] = rho_plus_p_theta_tot/rho_plus_p_tot;
+  if (psp->ln_tau_size > 1) {
+    class_alloc(psp->ddmatter_transfer,sizeof(double)*psp->ln_tau_size*psp->ln_k_size*psp->ic_size[index_md]*psp->tr_size,psp->error_message);
+    class_call(array_spline_table_lines(psp->ln_tau,
+                                        psp->ln_tau_size,
+                                        psp->matter_transfer,
+                                        psp->ic_size[index_md]*psp->ln_k_size*psp->tr_size,
+                                        psp->ddmatter_transfer,
+                                        psp->error_message),
+               psp->error_message,
+               psp->error_message);
+                   pk_ic[(index_k * psp->ic_size[index_md] + index_ic)*psp->tr_size+index_tr] */
+  if (psp->ln_k_size*psp->ic_size[index_md]*psp->tr_size > 0){
+              psp->ln_k_size*psp->ic_size[index_md]*psp->tr_size*sizeof(double),
+              psp->error_message);
+      for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+        for (index_tr=0; index_tr<psp->tr_size; index_tr++) {
+          for (index_ic=0; index_ic<psp->ic_size[index_md]; index_ic++) {
+            tkfull[(index_k * psp->ic_size[index_md] + index_ic) * psp->tr_size + index_tr] = psp->matter_transfer[(((psp->ln_tau_size-1)*psp->ln_k_size + index_k) * psp->ic_size[index_md] + index_ic) * psp->tr_size + index_tr];
+                 psp->error_message,
+                 psp->error_message);
+    for (index_ic = 0; index_ic < psp->ic_size[index_md]; index_ic++) {
+      for (index_k=0; index_k<psp->ln_k_size; index_k++) {
+        dataptr = data+index_ic*(psp->ln_k_size*number_of_titles)+index_k*number_of_titles;
+        tk = &(tkfull[(index_k * psp->ic_size[index_md] + index_ic) * psp->tr_size]);
+        k = exp(psp->ln_k[index_k]);
+            class_store_double(dataptr,tk[psp->index_tr_delta_g],ppt->has_source_delta_g,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_delta_b],ppt->has_source_delta_b,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_delta_cdm],ppt->has_source_delta_cdm,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_delta_fld],ppt->has_source_delta_fld,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_delta_ur],ppt->has_source_delta_ur,storeidx);
+                class_store_double(dataptr,tk[psp->index_tr_delta_ncdm1+n_ncdm],ppt->has_source_delta_ncdm,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_delta_dcdm],ppt->has_source_delta_dcdm,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_delta_dr],ppt->has_source_delta_dr,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_delta_scf],ppt->has_source_delta_scf,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_delta_tot],_TRUE_,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_phi],ppt->has_source_phi,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_psi],ppt->has_source_psi,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_theta_g],ppt->has_source_theta_g,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_theta_b],ppt->has_source_theta_b,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_theta_cdm],ppt->has_source_theta_cdm,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_theta_fld],ppt->has_source_theta_fld,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_theta_ur],ppt->has_source_theta_ur,storeidx);
+                class_store_double(dataptr,tk[psp->index_tr_theta_ncdm1+n_ncdm],ppt->has_source_theta_ncdm,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_theta_dcdm],ppt->has_source_theta_dcdm,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_theta_dr],ppt->has_source_theta_dr,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_theta_scf],ppt->has_source_theta_scf,storeidx);
+            class_store_double(dataptr,tk[psp->index_tr_theta_tot],_TRUE_,storeidx);
+          class_store_double_or_default(dataptr,-tk[psp->index_tr_delta_cdm]/k2,ppt->has_source_delta_cdm,storeidx,0.0);
+          class_store_double_or_default(dataptr,-tk[psp->index_tr_delta_b]/k2,ppt->has_source_delta_b,storeidx,0.0);
+          class_store_double_or_default(dataptr,-tk[psp->index_tr_delta_g]/k2,ppt->has_source_delta_g,storeidx,0.0);
+          class_store_double_or_default(dataptr,-tk[psp->index_tr_delta_ur]/k2,ppt->has_source_delta_ur,storeidx,0.0);
+          class_store_double_or_default(dataptr,-tk[psp->index_tr_delta_ncdm1]/k2,ppt->has_source_delta_ncdm,storeidx,0.0);
+          class_store_double_or_default(dataptr,-tk[psp->index_tr_delta_tot]/k2,_TRUE_,storeidx,0.0);
+    //Necessary because the size could be zero (if psp->tr_size is zero)

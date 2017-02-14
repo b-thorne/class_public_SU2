@@ -430,7 +430,10 @@ cdef class Class:
             (self.sp.has_te, self.sp.index_ct_te, 'te'),
             (self.sp.has_bb, self.sp.index_ct_bb, 'bb'),
             (self.sp.has_pp, self.sp.index_ct_pp, 'pp'),
-            (self.sp.has_tp, self.sp.index_ct_tp, 'tp'),]
+            (self.sp.has_tp, self.sp.index_ct_tp, 'tp'),
+            (self.sp.has_tb, self.sp.index_ct_tb, 'tb'),
+            (self.sp.has_eb, self.sp.index_ct_eb, 'eb'),
+            ]
         spectra = []
 
         for flag, index, name in has_flags:
@@ -500,7 +503,12 @@ cdef class Class:
             (self.le.has_te, self.le.index_lt_te, 'te'),
             (self.le.has_bb, self.le.index_lt_bb, 'bb'),
             (self.le.has_pp, self.le.index_lt_pp, 'pp'),
-            (self.le.has_tp, self.le.index_lt_tp, 'tp'),]
+            (self.le.has_tp, self.le.index_lt_tp, 'tp'),
+            # Modification
+            (self.le.has_tb, self.le.index_lt_tb, 'tb'),
+            (self.le.has_eb, self.le.index_lt_eb, 'eb'),
+            # Ends here
+            ]
         spectra = []
 
         for flag, index, name in has_flags:
@@ -594,7 +602,7 @@ cdef class Class:
         if lmax > lmaxR:
             if nofail:
                 self._pars_check("l_max_lss",lmax)
-                self._pars_check("output",'rCl')
+                self._pars_check("output",'nCl')
                 self.compute()
             else:
                 raise CosmoSevereError("Can only compute up to lmax=%d"%lmaxR)
@@ -740,7 +748,7 @@ cdef class Class:
 
     # Defined twice ?
     def Omega_m(self):
-        return self.ba.Omega0_b+self.ba.Omega0_cdm
+        return self.ba.Omega0_b+self.ba.Omega0_cdm+self.ba.Omega0_ncdm_tot + self.ba.Omega0_dcdm
 
     def Omega_b(self):
         return self.ba.Omega0_b
@@ -897,9 +905,9 @@ cdef class Class:
 
     def Omega0_m(self):
         """
-        Return the sum of Omega0 for baryon and CDM
+        Return the sum of Omega0 for all non-relativistic components
         """
-        return self.ba.Omega0_b+self.ba.Omega0_cdm
+        return self.ba.Omega0_b+self.ba.Omega0_cdm+self.ba.Omega0_ncdm_tot + self.ba.Omega0_dcdm
 
     def get_background(self):
         """
